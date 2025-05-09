@@ -4,13 +4,12 @@ import (
 	"context"
 	"crypto/rand"
 	"fmt"
+	"github.com/joho/godotenv"
+	"golang.org/x/oauth2"
 	"log"
 	"net/http"
 	"os"
 	"time"
-
-	"github.com/joho/godotenv"
-	"golang.org/x/oauth2"
 )
 
 func loadenv() [2]string {
@@ -67,7 +66,8 @@ func Startoauth() {
 		fmt.Println("Client ID and Client Secret are required")
 		os.Exit(1)
 	}
-	fmt.Println(client_id, client_secret)
+
+	//fmt.Println(client_id, client_secret)
 	state := generateStateString()
 
 	oauthConfig := getoauthconfig(client_id, client_secret)
@@ -88,13 +88,15 @@ func Startoauth() {
 			return
 		}
 
-		fmt.Printf("Access Token: %s\n", token.AccessToken)
+		fmt.Println("Add this token to your .env file")
+		fmt.Println(token.AccessToken)
 
 		fmt.Fprintln(w, "Authentication successful! You can close this window.")
 		go func() {
 			time.Sleep(2 * time.Second)
 			os.Exit(0)
 		}()
+
 	})
 
 	go func() {
