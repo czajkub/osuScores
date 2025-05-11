@@ -5,25 +5,12 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	
-	"time"
-	"github.com/spf13/cobra"
-
-	"github.com/spf13/cobra"
 
 	"github.com/joho/godotenv"
+	"time"
 )
 
-var getCmd = &cobra.Command{
-	Use:   "get",
-	Short: "Get most recent 1000 scores",
-	Long:  "Returns JSON-style string containing the 1000 most recent osu! scores with the gamemode specified by the -g flag",
-	Run: func(cmd *cobra.Command, args []string) {
-		getscores()
-	},
-}
-
-func getscores() {
+func Getscores() []byte {
 	err := godotenv.Load(".env")
 	if err != nil {
 		fmt.Println("Error loading .env file")
@@ -61,7 +48,9 @@ func getscores() {
 		os.Exit(1)
 	}
 
-	fmt.Println(string(body))
-	fmt.Println(resp.StatusCode)
-
+	if resp.StatusCode != 200 {
+		fmt.Printf("Got response status code: %d\n", resp.StatusCode)
+		os.Exit(1)
+	}
+	return body
 }
