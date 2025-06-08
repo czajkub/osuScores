@@ -5,13 +5,17 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var Comparable string
+
 var getCmd = &cobra.Command{
-	Use:   "get",
+	Use:   "get -c [comparable]",
 	Short: "Get most recent 1000 scores",
 	Long:  "Prints data from 1000 most recent osu! scores with the gamemode specified by the -g flag",
+	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		rawscores := Getscores()
 		scores := UnmarshalJSON(rawscores)
+		scores = Sortscores(scores, Comparable)
 		printscores(scores)
 	},
 }

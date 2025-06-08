@@ -59,7 +59,7 @@ func UnmarshalJSON(data []byte) []Score {
 	var unmarshaledJSON results
 	err := json.Unmarshal(data, &unmarshaledJSON)
 	if err != nil {
-		fmt.Println("Error unmarshaling JSON", err)
+		fmt.Println("Error unmarshaling JSON: ", err)
 		os.Exit(1)
 	}
 	fmt.Printf("1st score pp: %f\n", unmarshaledJSON.Scores[0].Pp)

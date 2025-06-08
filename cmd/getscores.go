@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"slices"
 
 	"github.com/joho/godotenv"
 	"time"
@@ -53,4 +54,45 @@ func Getscores() []byte {
 		os.Exit(1)
 	}
 	return body
+}
+
+func Sortscores(scores []Score, bywhat string) []Score {
+	switch bywhat {
+	case "pp":
+		slices.SortFunc(scores, ppcomp)
+		return scores
+	case "score":
+		slices.SortFunc(scores, scorecomp)
+		return scores
+	case "acc":
+		slices.SortFunc(scores, acccomp)
+		return scores
+	}
+	return scores
+}
+
+func ppcomp(lhs, rhs Score) int {
+	if lhs.Pp < rhs.Pp {
+		return -1
+	} else if lhs.Pp > rhs.Pp {
+		return 1
+	} else {
+		return 0
+	}
+}
+func scorecomp(lhs, rhs Score) int {
+	if lhs.Total_score < rhs.Total_score {
+		return -1
+	} else if lhs.Total_score > rhs.Total_score {
+		return 1
+	}
+	return ppcomp(lhs, rhs)
+}
+func acccomp(lhs, rhs Score) int {
+	if lhs.Accuracy < rhs.Accuracy {
+		return -1
+	} else if lhs.Accuracy > rhs.Accuracy {
+		return 1
+	}
+	return ppcomp(lhs, rhs)
 }

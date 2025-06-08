@@ -4,15 +4,13 @@ import (
 	"fmt"
 	"os"
 
-	homedir "github.com/mitchellh/go-homedir"
+	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 var (
-	cfgFile     string
-	projectBase string
-	userLicense string
+	cfgFile string
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -42,18 +40,14 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.main.yaml)")
-	rootCmd.PersistentFlags().StringVarP(&projectBase, "projectbase", "b", "", "base project directory eg. github.com/spf13/")
-	rootCmd.PersistentFlags().StringP("author", "a", "YOUR NAME", "Author name for copyright attribution")
-	rootCmd.PersistentFlags().StringVarP(&userLicense, "license", "l", "gpl-3.0", "Name of license for the project (can provide `licensetext` in config)")
-	viper.BindPFlag("projectbase", rootCmd.PersistentFlags().Lookup("projectbase"))
-	viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author"))
-	viper.BindPFlag("license", rootCmd.PersistentFlags().Lookup("license"))
 	viper.BindPFlag("useViper", rootCmd.PersistentFlags().Lookup("viper"))
 
 	viper.SetDefault("author", "czajkub <czajkub@gmail.com>")
 	viper.SetDefault("license", "gpl-3.0")
 
+	getCmd.Flags().StringVarP(&Comparable, "compare", "c", "pp", "value to compare scores by")
 	rootCmd.AddCommand(getCmd)
+
 }
 
 func initConfig() {
