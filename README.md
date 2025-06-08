@@ -1,10 +1,11 @@
 # osuScores
 
-osuScores is a command-line app written in Go used to display recent osu! scores, sort them by chosen metrics
+osuScores is a command-line app written in Go used to display recent osu! scores, sort them by chosen metrics, display used mods and more
 
 ## Features
 
 - Print up to 1000 recently set osu! scores to standard output
+- Print out which mods are most commonly used in recent scores
 - Write score data into a file (TODO)
 - Sort scores by pp, accuracy, score, and more
 - Find users who set recent scores
