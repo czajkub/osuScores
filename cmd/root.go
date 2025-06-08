@@ -46,7 +46,7 @@ func init() {
 	viper.SetDefault("license", "gpl-3.0")
 
 	getCmd.Flags().StringVarP(&Comparable, "compare", "c", "pp", "value to compare scores by")
-	rootCmd.AddCommand(getCmd)
+	rootCmd.AddCommand(getCmd, modCmd)
 
 }
 
